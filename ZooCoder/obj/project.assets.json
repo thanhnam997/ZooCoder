@@ -319,11 +319,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/workspaces/ZooCoder9/ZooCoder/ZooCoder.csproj",
+      "projectUniqueName": "/workspaces/ZooCoder/ZooCoder/ZooCoder.csproj",
       "projectName": "ZooCoder",
-      "projectPath": "/workspaces/ZooCoder9/ZooCoder/ZooCoder.csproj",
+      "projectPath": "/workspaces/ZooCoder/ZooCoder/ZooCoder.csproj",
       "packagesPath": "/home/codespace/.nuget/packages/",
-      "outputPath": "/workspaces/ZooCoder9/ZooCoder/obj/",
+      "outputPath": "/workspaces/ZooCoder/ZooCoder/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/codespace/.nuget/NuGet/NuGet.Config"
@@ -379,7 +379,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.301/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.402/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

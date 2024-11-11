@@ -1,3 +1,95 @@
 ﻿@page
 @model IndexModel
 @using Microsoft.Data.Sqlite
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feeding Schedule for Como Zoo</title>
+</head>
+<body>
+    <h1>Feeding Schedule for Como Zoo</h1>
+    <style>
+        h1 {
+            text-align: center;
+        }
+        form, table {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 5px;
+        }
+</style>
+    @{
+        // SQLite connection string
+        string connectionString = "Data Source=FeedingSchedules.db";
+
+        using (SqliteConnection connection = new SqliteConnection(connectionString))
+        {
+            try
+            {
+                // Open the SQLite connection
+                connection.Open();
+
+                // SQL query to fetch zookeeper, animal, and feeding time details
+                string sqlQuery = @"SELECT E.first_name AS ZooKeeperName, 
+                                        A.name AS AnimalName, 
+                                        A.species AS AnimalSpecies, 
+                                        FT.feeding_time AS FeedingTime 
+                                    FROM Animals AS A 
+                                    JOIN Employees AS E ON A.employee_id = E.employee_id 
+                                    JOIN FeedingTimes AS FT ON A.feeding_time = FT.feeding_time 
+                                    ORDER BY ZooKeeperName, FeedingTime";
+
+                using (SqliteCommand command = new SqliteCommand(sqlQuery, connection))
+                {
+                    using (SqliteDataReader reader = command.ExecuteReader())
+                    {
+                        // Start the HTML table
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Zookeeper</th>
+                                    <th>Animal</th>
+                                    <th>Species</th>
+                                    <th>Feeding Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @while (reader.Read())
+                                {
+                                    string zooKeeperName = reader["ZooKeeperName"].ToString();
+                                    string animalName = reader["AnimalName"].ToString();
+                                    string animalSpecies = reader["AnimalSpecies"].ToString();
+                                    string feedingTime = reader["FeedingTime"].ToString();
+
+                                    <tr>
+                                        <td>@zooKeeperName</td>
+                                        <td>@animalName</td>
+                                        <td>@animalSpecies</td>
+                                        <td>@feedingTime</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                <p>Error: @ex.Message</p> <!-- Display any errors that occur -->
+            }
+            finally
+            {
+                // Close the connection to the database
+                connection.Close();
+            }
+        }
+    }
+</body>
+</html>
